@@ -1,26 +1,30 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="Main">
+    <!-- <ParagraphComp
+      h1="H1 Example"
+      h2="H2 Example"
+      h3="H3 Example"
+      h4="H4 Example"
+      p="Paragraph Example with link example."
+    /> -->
+    <SidebarOptionOne />
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+// import NavOptionOne from "./components/NavOptionOne.vue";
+// import ParagraphComp from "./components/ParagraphComp.vue";
+import SidebarOptionOne from "./components/SidebarOptionOne.vue";
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    // ParagraphComp,
+    SidebarOptionOne,
+  },
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.Main {
 }
 </style>

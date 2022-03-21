@@ -1,0 +1,52 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
+
+:root {
+  --background: #242424;
+  --background-alt: #ffe1c0;
+  --background-dark: #1d1d1d;
+  --background-dark-alt: #f7f7f7;
+  --background-grey: #fbfbfb;
+
+  --table: #646464;
+
+  --text: #1d1d1d;
+  --text-alt: #f0f0f0;
+  --text-dark: #8a8783;
+  --text-dark-alt: ;
+
+  --cta: #00918d;
+  --cta-alt: #ffe1c0;
+  --red: #f54748;
+  --orange: #e28500;
+  --green: #00e741;
+  --grey: #e2e1e1;
+  --black: #000000;
+}
+
+body {
+  // background: rgb(29, 29, 29);
+  // background: linear-gradient(0deg, #1d1d1d 35%, #e5989b 14%);
+  background-color: var(--background);
+  font-family: "Lato", sans-serif;
+}
+
+.btn {
+  background: var(--cta);
+  color: var(--text-alt);
+  width: fit-content;
+  padding: 14px 40px;
+  border-radius: 5px;
+  font-size: 16px;
+
+  font-weight: 600;
+}
+
+@media only screen and (max-width: 991px) {
+  .btn {
+    margin-top: 20px;
+    margin-bottom: 120px;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 95%;
+  }
+}
