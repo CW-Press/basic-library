@@ -1,26 +1,77 @@
+<script lang="ts">
+import { defineComponent, ref, onMounted } from "vue";
+
+import { propValidtion } from "../Modules/propValidtion";
+
+export default defineComponent({
+  name: "SidebarOptionTwo",
+  props: {
+    content: { type: Array, required: true },
+  },
+  setup(props) {
+    const pageContent = ref(propValidtion(props.content));
+    const toggleOpen = ref("");
+
+    const thisFunction = () => {
+      for (let i = 0; i < pageContent.value.length; i++) {
+        console.log("pageContent.value[i].name", pageContent.value[i]);
+      }
+    };
+    const openMenu = (name: string) => {
+      if (toggleOpen.value === name) {
+        toggleOpen.value = "";
+        return;
+      }
+      toggleOpen.value = name;
+    };
+    const toggleMenu = (currentItem: any) => {
+      currentItem.open = !currentItem.open;
+    };
+
+    onMounted(() => {
+      thisFunction();
+    });
+
+    return {
+      pageContent,
+      toggleOpen,
+
+      openMenu,
+      toggleMenu,
+    };
+  },
+});
+</script>
+
 <template>
   <div class="sidebarOneComp">
     <div class="sidebarOneDesktop">
       <div class="sidebar">
-        <div class="heading">
-          <h2>Getting Started</h2>
-          <i class="fa-solid fa-chevron-down"></i>
+        <div class="loopClass" v-for="item in pageContent" :key="item.name">
+          <div class="heading" @click="openMenu(item.name)">
+            <h2>{{ item.name }}</h2>
+            <i class="fa-solid fa-chevron-down" :class="{ open: toggleOpen === item.name }"></i>
+          </div>
+          <div class="topSection" :class="{ open: toggleOpen === item.name }">
+            <a v-for="page in item.children" :key="page.name" :href="page.path">
+              <p v-html="page.name"></p>
+            </a>
+          </div>
         </div>
-        <div class="topSection">
-          <p>Introduction</p>
-          <p>Quick Start</p>
-        </div>
-        <div class="heading" style="margin-top: 20px">
-          <h2>Essentials</h2>
-          <i class="fa-solid fa-chevron-down"></i>
-        </div>
-        <div class="bottomSection">
-          <p>Creating an Application</p>
-          <p>Template Syntax</p>
-          <p>Reactivity Fundaments</p>
-          <p>Computed Properties</p>
-          <p>Class and Style Bindings</p>
-          <p>Conditional Rendering</p>
+      </div>
+    </div>
+    <div class="sidebarOneDesktop">
+      <div class="sidebar">
+        <div class="loopClass" v-for="item in pageContent" :key="item.name">
+          <div class="heading" @click="toggleMenu(item)">
+            <h2>{{ item.name }}</h2>
+            <i class="fa-solid fa-chevron-down" :class="{ open: item.open }"></i>
+          </div>
+          <div class="topSection" :class="{ open: item.open }">
+            <a v-for="page in item.children" :key="page.name" :href="page.path">
+              <p v-html="page.name"></p>
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -31,10 +82,11 @@
 .sidebarOneComp {
   .sidebarOneDesktop {
     .sidebar {
-      width: fit-content;
+      width: 350px;
       background-color: var(--background);
       padding: 20px 40px;
       border: 1px solid #ffffff;
+
       .heading {
         display: flex;
         flex-direction: row;
@@ -42,9 +94,14 @@
         align-items: baseline;
         justify-content: space-between;
         color: var(--text-alt);
+        cursor: pointer;
         i {
           font-size: 10px;
           color: var(--text-alt);
+          transition: 0.4s ease all;
+        }
+        i.open {
+          transform: rotate(-180deg);
         }
         h2 {
           font-size: 17px;
@@ -53,17 +110,34 @@
           margin-bottom: 10px;
         }
       }
-      .heading:nth-child(even) {
-        margin-top: 10px;
-      }
+
       .topSection {
-        margin-right: 76px;
+        margin-bottom: 30px;
         color: var(--text-dark);
-        p {
+        max-height: 0px;
+        transition: 0.8s ease all;
+        overflow: hidden;
+
+        p,
+        a {
           font-size: 13px;
           font-weight: 400;
           margin: 0;
           margin-bottom: 5px;
+          text-decoration: none;
+          color: var(--text-dark);
+        }
+        p:hover {
+          cursor: pointer;
+          color: var(--cta);
+        }
+      }
+      .topSection.open {
+        max-height: 25vh;
+      }
+      .loopClass:last-child {
+        .topSection {
+          margin-bottom: 0px;
         }
       }
       .bottomSection {
@@ -84,10 +158,6 @@
           margin-bottom: 5px;
         }
       }
-    }
-    p:hover {
-      cursor: pointer;
-      color: var(--cta);
     }
   }
 }
